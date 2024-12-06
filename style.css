@@ -1,0 +1,271 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* Base font size increased */
+  color: #333;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Main Container */
+.container {
+  width: 350px;
+  /* padding: 20px; */
+  border-radius: 12px;
+  background-color: #ffffff; /* White background for main container */
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.app-name {
+  font-size: 2rem;
+  font-weight: 750;
+  color: #43a047; /* Green color for title */
+}
+
+/* Section Cards */
+.section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f1f8e9; /* Light green background for cards */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for card effect */
+}
+
+/* Section Titles */
+h2 {
+  font-size: 1.2rem;
+  color: #388e3c;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #c8e6c9;
+  padding-bottom: 5px;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background-color: #43a047; /* Green primary button */
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #a5d6a7; /* Light green for secondary button */
+  color: #333;
+}
+
+button:disabled {
+  opacity: 0.7; /* Slightly transparent, but still visible */
+  cursor: not-allowed; /* Show the not-allowed cursor for disabled buttons */
+  background-color: #bdbdbd; /* Light gray background */
+  color: #ffffff; /* White text for contrast */
+  box-shadow: none; /* Remove any hover effects */
+}
+
+
+button:hover {
+  background-color: #388e3c; /* Darker green for hover */
+}
+
+button:active {
+  transform: scale(0.97); /* Slightly shrink the button */
+  background-color: #2e7d32; /* Darker green for active state */
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2); /* Inset shadow for pressed effect */
+}
+
+
+/* Status */
+#status {
+  font-size: 1.1rem; /* Increased status text size */
+  font-weight: 700; /* Bolder weight for emphasis */
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Exercise Progress */
+#exerciseProgress {
+  font-size: 0.9rem;
+  font-weight: 700; /* Bolder weight for emphasis */
+  color: #555;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background-color: #43a047; /* Green for the progress fill */
+  transition: width 0.3s;
+  border-radius: 10px;
+}
+
+/* Settings */
+label {
+  font-size: 0.9rem;
+  font-weight: 550; /* Bolder labels */
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+select,
+input[type="time"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  background-color: #f9f9f9;
+}
+
+select:focus,
+input[type="time"]:focus,
+input[type="number"]:focus {
+  border-color: #43a047;
+  outline: none;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #43a047;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Mute & Reminder Toggles */
+#muteToggle,
+#reminderToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+#muteToggle label,
+#reminderToggle label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Hidden */
+.hidden {
+  display: none;
+}
+
+/* Circular Progress Bar */
+.progress-ring {
+  display: block;
+  margin: 0 auto;
+  transform: rotate(-90deg); /* Rotate to start from the top */
+}
+
+.progress-ring__background {
+  fill: none;
+  stroke: #e0e0e0; /* Light gray background */
+  stroke-width: 8;
+}
+
+.progress-ring__circle {
+  fill: none;
+  stroke: #43a047; /* Green stroke for progress */
+  stroke-width: 8;
+  stroke-linecap: round; /* Rounded edges for progress */
+  stroke-dasharray: 339.292; /* Circumference of the circle */
+  stroke-dashoffset: 339.292; /* Hidden at the start */
+  /* transition: stroke-dashoffset 0.3s linear; */
+}
+
+.progress-ring__text {
+  font-size: 2rem;
+  fill: #000; /* Ensure it's visible (e.g., black) */
+  
+  font-weight: bold;
+  transform: rotate(90deg); /* Correct rotation of text */
+}
+
