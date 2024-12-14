@@ -2,6 +2,8 @@
 
 **KegelKeeper** is your personal companion for staying consistent with Kegel exercises. Designed to fit seamlessly into your daily routine, this Chrome extension helps you strengthen your pelvic floor muscles with customizable timers and reminders.
 
+Download here: [Chrome Web Store](https://chromewebstore.google.com/detail/KegelKeeper:%20Smart%20Reminder/nioiahlhndbkgjojadohdaanjeecbpoa?hl=en&authuser=0)
+
 ---
 
 ## Features
