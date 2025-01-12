@@ -19,7 +19,7 @@ Download here: [Chrome Web Store](https://chromewebstore.google.com/detail/Kegel
 
 ## Screenshot
 
-![KegelKeeper Screenshot](./screenshots.jpg)  
+![KegelKeeper Screenshot](./assets/images/screenshots.jpg)  
 _A snapshot of the intuitive interface._
 
 ---

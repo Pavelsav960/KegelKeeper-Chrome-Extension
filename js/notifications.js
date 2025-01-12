@@ -37,7 +37,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
       if (result.reminderEnabled && (alarm.name === 'dailyKegelReminder' || alarm.name === 'kegelReminderRepeat')) {
         chrome.notifications.create({
           type: 'basic',
-          iconUrl: 'icon.png',
+          iconUrl: 'assets/icons/icon.png',
           title: 'KegelKeeper Reminder',
           message: 'Time for your Kegel exercise session! Stay consistent for better results.'
         }, (notificationId) => {

@@ -4,24 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kegel Timer</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
   <div class="container">
 
      <!-- Header Section with Logo and Name -->
      <header class="app-header">
-      <img src="logo48.png" alt="Kegel Keeper Logo" class="logo"> <!-- Add your logo here -->
+      <img src="../assets/icons/logo48.png" alt="Kegel Keeper Logo" class="logo">
+
       <span class="app-name">Kegel Keeper</span>
     </header>
 
-    <!-- Exercise Controls Section -->
-    <div id="controls" class="section">
-      <p id="status" aria-live="polite">Ready to begin!</p>
-      <button id="startButton" class="btn-primary">Start</button>
-      <button id="stopButton" class="btn-secondary" disabled>Stop</button>
-      <div id="exerciseProgress" aria-live="polite">Cycle 0 of 0</div>
-    </div>
+   <!-- Exercise Controls Section -->
+<div id="controls" class="section">
+  <p id="status" aria-live="polite">Ready to begin!</p>
+  <div class="button-group">
+    <button id="startButton" class="btn-primary">Start</button>
+    <button id="stopButton" class="btn-secondary" disabled>Stop</button>
+  </div>
+  
+</div>
+
 
 
    <!-- Circular Progress Bar -->
@@ -34,7 +38,10 @@
       Ready
     </text>
   </svg>
+  <div id="exerciseProgress" aria-live="polite">Cycle 0 of 0</div>
 </div>
+
+
 
 
     <!-- Exercise Settings Section -->
@@ -111,7 +118,7 @@
       </select>
 
       <button id="saveSettings" class="btn-primary">Save Settings</button>
-      <button id="resetSettings" class="btn-secondary">Reset Settings</button>
+      
 
       <!-- Mute Toggle Button -->
       <div id="muteToggle">
@@ -150,7 +157,8 @@
     </section>
   </div>
 
-  <script type="module" src="js/popup.js"></script>
+  <script type="module" src="../js/popup.js"></script>
+
 </body>
 </html>
 

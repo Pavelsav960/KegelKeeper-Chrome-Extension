@@ -32,11 +32,27 @@ document.addEventListener('DOMContentLoaded', () => {
   loadReminderSettings(reminderTimeInput, reminderRepeatIntervalInput, enableRemindersCheckbox);
   attachEventListeners();
 
-  exerciseProgress.textContent = "Ready to start your exercise!";
+  exerciseProgress.textContent = "";
   
   chrome.storage.local.get('isMuted', (data) => {
     muteSwitch.checked = data.isMuted || false;
   });
+
+  // Handle tab switching
+  document.querySelectorAll('.tab-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      // Remove active class from all tabs and content
+      document.querySelectorAll('.tab-button').forEach((btn) => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach((content) => content.classList.remove('active'));
+
+      // Add active class to clicked tab and corresponding content
+      button.classList.add('active');
+      const tabId = button.getAttribute('data-tab');
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+
+  
 
   chrome.runtime.sendMessage({ command: 'checkExerciseStatus' }, (response) => {
     if (response?.isActive) {
@@ -114,7 +130,7 @@ function attachEventListeners() {
   startButton.addEventListener('click', handleStart);
   stopButton.addEventListener('click', handleStop);
   document.getElementById('saveSettings').addEventListener('click', saveExerciseSettings);
-  document.getElementById('resetSettings').addEventListener('click', resetExerciseSettings);
+  
 
   document.getElementById('saveReminderTime').addEventListener('click', () => {
     saveReminderSettings(reminderTimeInput, reminderRepeatIntervalInput, enableRemindersCheckbox, updateStatus);
@@ -232,3 +248,7 @@ chrome.runtime.onMessage.addListener((message) => {
     updateCircularProgressText(`Cycle ${message.currentCycle}/${message.totalCycles}`);
   }
 });
+
+
+
+

@@ -1,5 +1,5 @@
-import { startExercise, stopExercise, getExerciseState } from './js/exerciseManager.js';
-import { scheduleReminderAtTime } from './js/notifications.js';
+import { startExercise, stopExercise, getExerciseState } from './exerciseManager.js';
+import { scheduleReminderAtTime } from './notifications.js';
 
 // Listener for messages from popup.js or exerciseManager.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

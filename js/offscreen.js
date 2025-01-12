@@ -1,7 +1,7 @@
 // Audio instances for playback
 const audioFiles = {
-  hold: new Audio('hold.mp3'),
-  release: new Audio('release.mp3')
+    hold: new Audio('../assets/audio/hold.mp3'),
+    release: new Audio('../assets/audio/release.mp3')
 };
 
 // Listen for messages from background.js to play audio

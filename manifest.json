@@ -4,23 +4,27 @@
   "version": "0.1.0",
   "description": "Reminds users to do Kegel exercises with customizable timers.",
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "logo16.png"
+    "default_popup": "views/popup.html",
+    "default_icon": "assets/icons/logo16.png"
   },
   "icons": {
-  "16": "logo16.png",
-  "48": "logo48.png",
-  "128": "logo128.png"
-},
-
+    "16": "assets/icons/logo16.png",
+    "48": "assets/icons/logo48.png",
+    "128": "assets/icons/logo128.png"
+  },
   "permissions": ["alarms", "storage", "notifications", "offscreen"],
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "js/background.js",
     "type": "module"
   },
   "web_accessible_resources": [
     {
-      "resources": ["icon.png", "offscreen.html", "hold.mp3", "release.mp3"],
+      "resources": [
+        "assets/icons/icon.png", 
+        "views/offscreen.html", 
+        "assets/audio/hold.mp3", 
+        "assets/audio/release.mp3"
+      ],
       "matches": ["<all_urls>"]
     }
   ]
