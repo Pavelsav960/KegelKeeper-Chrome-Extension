@@ -22,7 +22,7 @@ body.dark {
 body.dark .container {
   width: 350px;
   border-radius: 12px;
-  background-color: #1e1e1e; /* Slightly lighter dark tone */
+  background-color: #121212; /* Slightly lighter dark tone */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
 }
 
