@@ -237,14 +237,17 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Reminder Toggles */
+/* Toggles */
 #muteToggle,
-#reminderToggle {
+#reminderToggle,
+#themeToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
 }
+
+
 
 .hidden {
   display: none;
