@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kegel Timer</title>
-  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/base.css">
+   <!-- The light/dark CSS files will be dynamically added here -->
 </head>
-<body>
+<body class="light">
   <div class="container">
 
      <!-- Header Section with Logo and Name -->
@@ -18,7 +19,7 @@
 
    <!-- Exercise Controls Section -->
 <div id="controls" class="section">
-  <p id="status" aria-live="polite">Ready to begin!</p>
+  <p id="status" aria-live="polite">Ready to begin</p>
   <div class="button-group">
     <button id="startButton" class="btn-primary">Start</button>
     <button id="stopButton" class="btn-secondary" disabled>Stop</button>
@@ -59,16 +60,7 @@
         <option value="8">8 seconds</option>
         <option value="9">9 seconds</option>
         <option value="10">10 seconds</option>
-        <option value="11">11 seconds</option>
-        <option value="12">12 seconds</option>
-        <option value="13">13 seconds</option>
-        <option value="14">14 seconds</option>
-        <option value="15">15 seconds</option>
-        <option value="16">16 seconds</option>
-        <option value="17">17 seconds</option>
-        <option value="18">18 seconds</option>
-        <option value="19">19 seconds</option>
-        <option value="20">20 seconds</option>
+        
       </select>
       
       <label for="releaseTime">Release Time (seconds):</label>
@@ -82,16 +74,7 @@
         <option value="8">8 seconds</option>
         <option value="9">9 seconds</option>
         <option value="10">10 seconds</option>
-        <option value="11">11 seconds</option>
-        <option value="12">12 seconds</option>
-        <option value="13">13 seconds</option>
-        <option value="14">14 seconds</option>
-        <option value="15">15 seconds</option>
-        <option value="16">16 seconds</option>
-        <option value="17">17 seconds</option>
-        <option value="18">18 seconds</option>
-        <option value="19">19 seconds</option>
-        <option value="20">20 seconds</option>
+        
       </select>
 
       <label for="cycles">Cycles:</label>
@@ -105,29 +88,30 @@
         <option value="8">8 cycles</option>
         <option value="9">9 cycles</option>
         <option value="10">10 cycles</option>
-        <option value="11">11 cycles</option>
-        <option value="12">12 cycles</option>
-        <option value="13">13 cycles</option>
-        <option value="14">14 cycles</option>
-        <option value="15">15 cycles</option>
-        <option value="16">16 cycles</option>
-        <option value="17">17 cycles</option>
-        <option value="18">18 cycles</option>
-        <option value="19">19 cycles</option>
-        <option value="20">20 cycles</option>
+       
       </select>
 
       <button id="saveSettings" class="btn-primary">Save Settings</button>
       
 
       <!-- Mute Toggle Button -->
-      <div id="muteToggle">
-        <label for="muteSwitch">Mute Sound:</label>
-        <label class="switch">
-          <input type="checkbox" id="muteSwitch">
-          <span class="slider"></span>
-        </label>
-      </div>
+<div id="muteToggle">
+  <label for="muteSwitch">Mute Sound:</label>
+  <label class="switch">
+    <input type="checkbox" id="muteSwitch">
+    <span class="slider"></span>
+  </label>
+</div>
+
+<!-- Theme Toggle Button -->
+<div id="themeToggle">
+  <label for="themeSwitch">Dark Mode:</label>
+  <label class="switch">
+    <input type="checkbox" id="themeSwitch">
+    <span class="slider"></span>
+  </label>
+</div>
+
     </section>
 
     <!-- Reminder Settings Section -->

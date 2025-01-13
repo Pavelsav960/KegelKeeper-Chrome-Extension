@@ -1,3 +1,6 @@
+@import './light.css';
+@import './dark.css';
+
 /* Reset */
 * {
   box-sizing: border-box;

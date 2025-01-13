@@ -15,10 +15,16 @@ const exerciseProgress = document.getElementById('exerciseProgress');
 const progressText = document.getElementById('progressText'); // Text inside the circular bar
 const progressCircle = document.querySelector('.progress-ring__circle'); // Circular progress bar
 const muteSwitch = document.getElementById('muteSwitch');
+const themeSwitch = document.getElementById('themeSwitch'); // Theme toggle element
 
 // Constants for the circular progress bar
 const RADIUS = 90; // Updated radius
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+console.log(themeSwitch);
+console.log(localStorage.getItem('theme'));
+console.log(document.body.classList);
+
 
 let circularProgressInterval;
 
@@ -32,11 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
   loadReminderSettings(reminderTimeInput, reminderRepeatIntervalInput, enableRemindersCheckbox);
   attachEventListeners();
 
-  exerciseProgress.textContent = "";
+  exerciseProgress.textContent = ".....";
   
   chrome.storage.local.get('isMuted', (data) => {
     muteSwitch.checked = data.isMuted || false;
   });
+
+  // Load the saved theme preference
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  console.log('Loaded Theme from Local Storage:', savedTheme); // Check the loaded theme
+  document.body.classList.add(savedTheme);
+  console.log('Body Classes After Theme Load:', document.body.classList); // Check updated body classes
+  themeSwitch.checked = savedTheme === 'dark';
 
   // Handle tab switching
   document.querySelectorAll('.tab-button').forEach((button) => {
@@ -64,6 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+
+// Apply a given theme
+function applyTheme(theme) {
+  console.log('Applying Theme:', theme); // Debug theme being applied
+  // Remove existing theme classes
+  document.body.classList.remove('light', 'dark');
+  // Add the selected theme
+  document.body.classList.add(theme);
+  console.log('Body Classes After Applying Theme:', document.body.classList); // Verify applied classes
+  // Save the preference
+  localStorage.setItem('theme', theme);
+  console.log('Theme Saved to Local Storage:', localStorage.getItem('theme')); // Confirm saved theme
+}
 
 // Function to start circular progress animation
 function startCircularProgress(duration) {
@@ -101,9 +128,6 @@ function startCircularProgress(duration) {
 }
 
 
-
-
-
 // Reset the circular progress bar
 function resetCircularProgress() {
   clearInterval(circularProgressInterval);
@@ -130,7 +154,6 @@ function attachEventListeners() {
   startButton.addEventListener('click', handleStart);
   stopButton.addEventListener('click', handleStop);
   document.getElementById('saveSettings').addEventListener('click', saveExerciseSettings);
-  
 
   document.getElementById('saveReminderTime').addEventListener('click', () => {
     saveReminderSettings(reminderTimeInput, reminderRepeatIntervalInput, enableRemindersCheckbox, updateStatus);
@@ -143,6 +166,13 @@ function attachEventListeners() {
     const isMuted = muteSwitch.checked;
     chrome.runtime.sendMessage({ command: 'toggleMute', isMuted });
     chrome.storage.local.set({ isMuted });
+  });
+
+  // Theme toggle listener
+  themeSwitch.addEventListener('change', () => {
+    console.log('Theme Switch Toggled:', themeSwitch.checked); // Debug the toggle state
+    const selectedTheme = themeSwitch.checked ? 'dark' : 'light';
+    applyTheme(selectedTheme);
   });
 }
 

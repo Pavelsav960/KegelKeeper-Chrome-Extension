@@ -1,0 +1,31 @@
+body.light {
+  color: #333;
+  background-color: #ffffff;
+}
+
+body.light .container {
+  background-color: #ffffff;
+}
+
+body.light .app-name {
+  color: #43a047;
+}
+
+body.light .section {
+  background-color: #f1f8e9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.light h2 {
+  color: #2e7d32;
+}
+
+body.light .btn-primary {
+  background-color: #43a047;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.light .btn-primary:hover {
+  background-color: #388e3c;
+}

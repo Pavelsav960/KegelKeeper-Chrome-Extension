@@ -1,3 +1,5 @@
+/* dark.css */
+
 /* Reset */
 * {
   box-sizing: border-box;
@@ -5,11 +7,11 @@
   padding: 0;
 }
 
-body {
+body.dark {
   font-family: Arial, sans-serif;
   font-size: 16px;
-  color: #333;
-  background-color: #ffffff;
+  color: #e0e0e0; /* Light text for readability */
+  background-color: #121212; /* Dark background for body */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,15 +19,14 @@ body {
   min-height: 100vh;
 }
 
-/* Main Container */
-.container {
+body.dark .container {
   width: 350px;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: #1e1e1e; /* Slightly lighter dark tone */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
 }
 
-/* Header */
-.app-header {
+body.dark .app-header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,7 +34,7 @@ body {
   margin-bottom: 20px;
 }
 
-.logo {
+body.dark .logo {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -41,32 +42,29 @@ body {
   object-fit: cover;
 }
 
-.app-name {
+body.dark .app-name {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #43a047;
+  color: #66bb6a; /* Bright green for title */
 }
 
-/* Section */
-.section {
+body.dark .section {
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #f1f8e9;
+  background-color: #2a2a2a; /* Darker tone for sections */
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-/* Section Titles */
-h2 {
+body.dark h2 {
   font-size: 1.5rem;
-  color: #2e7d32;
+  color: #81c784; /* Soft green for titles */
   text-align: center;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
-/* Buttons */
-button {
+body.dark button {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
@@ -77,172 +75,151 @@ button {
   margin-top: 10px;
 }
 
-.btn-primary {
-  background-color: #43a047;
-  color: white;
+body.dark .btn-primary {
+  background-color: #66bb6a;
+  color: #ffffff;
   font-size: 1.2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.btn-primary:hover {
-  background-color: #388e3c;
+body.dark .btn-primary:hover {
+  background-color: #4caf50;
 }
 
-.btn-secondary {
-  background-color: #a5d6a7;
-  color: #333;
-}
-
-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  background-color: #bdbdbd;
+body.dark .btn-secondary {
+  background-color: #4caf50;
   color: #ffffff;
 }
 
-/* Button Group */
-.button-group {
+body.dark button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #757575;
+  color: #bdbdbd;
+}
+
+body.dark .button-group {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
 
-.button-group button {
+body.dark .button-group button {
   flex: 1;
 }
 
-/* Status Text */
-#status {
+body.dark #status {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 20px;
 }
 
-/* Exercise Progress */
-#exerciseProgress {
+body.dark #exerciseProgress {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #555;
+  color: #bdbdbd;
   text-align: center;
   margin-top: 20px;
   min-height: 23px;
 }
 
-/* Progress Bar */
-.progress-ring {
+body.dark .progress-ring {
   display: block;
   margin: 20px auto;
   transform: rotate(-90deg);
 }
 
-.progress-ring__background {
+body.dark .progress-ring__background {
   fill: none;
-  stroke: #e0e0e0;
+  stroke: #424242; /* Dark gray */
   stroke-width: 12;
 }
 
-.progress-ring__circle {
+body.dark .progress-ring__circle {
   fill: none;
-  stroke: #43a047;
+  stroke: #66bb6a; /* Green stroke */
   stroke-width: 12;
   stroke-linecap: round;
   stroke-dasharray: 565.48;
   stroke-dashoffset: 565.48;
 }
 
-.progress-ring__text {
+body.dark .progress-ring__text {
   font-size: 2rem;
-  fill: #000;
+  fill: #ffffff; /* White text */
   font-weight: bold;
   transform: rotate(90deg);
 }
 
-/* Labels */
-label {
+body.dark label {
   font-size: 1rem;
   font-weight: bold;
-  color: #555;
+  color: #bdbdbd;
   margin-bottom: 5px;
   display: block;
 }
 
-/* Inputs and Dropdowns */
-select,
-input[type="time"],
-input[type="number"] {
+body.dark select,
+body.dark input[type="time"],
+body.dark input[type="number"] {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
-  border: 2px solid #ddd;
+  border: 2px solid #424242;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #303030; /* Darker background for inputs */
+  color: #ffffff;
   margin-bottom: 15px;
 }
 
-select:focus,
-input:focus {
-  border-color: #43a047;
+body.dark select:focus,
+body.dark input:focus {
+  border-color: #66bb6a;
   outline: none;
 }
 
-/* Toggle Switch */
-.switch {
+body.dark .switch {
   position: relative;
   display: inline-block;
   width: 50px;
   height: 24px;
 }
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
+body.dark .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #424242;
   transition: 0.4s;
   border-radius: 24px;
 }
 
-.slider:before {
+body.dark .slider:before {
   position: absolute;
   content: "";
   height: 18px;
   width: 18px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
+  background-color: #ffffff;
   transition: 0.4s;
   border-radius: 50%;
 }
 
-input:checked + .slider {
-  background-color: #43a047;
+body.dark input:checked + .slider {
+  background-color: #66bb6a;
 }
 
-input:checked + .slider:before {
+body.dark input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Reminder Toggles */
-#muteToggle,
-#reminderToggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.hidden {
+body.dark .hidden {
   display: none;
 }
