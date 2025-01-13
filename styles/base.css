@@ -104,6 +104,14 @@ button:disabled {
   color: #ffffff;
 }
 
+/* Button Click Effect */
+button:active {
+  transform: scale(0.95); /* Slightly shrink the button */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow to indicate a press */
+  background-color: #388e3c; /* Slightly darker shade for primary buttons */
+}
+
+
 /* Button Group */
 .button-group {
   display: flex;
