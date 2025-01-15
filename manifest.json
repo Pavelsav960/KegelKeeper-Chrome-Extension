@@ -5,12 +5,12 @@
   "description": "Reminds users to do Kegel exercises with customizable timers.",
   "action": {
     "default_popup": "views/popup.html",
-    "default_icon": "assets/icons/logo16.png"
+    "default_icon": "assets/icons/rounded_logo128.png"
   },
   "icons": {
-    "16": "assets/icons/logo16.png",
-    "48": "assets/icons/logo48.png",
-    "128": "assets/icons/logo128.png"
+    "16": "assets/icons/rounded_logo16.png",
+    "48": "assets/icons/rounded_logo48.png",
+    "128": "assets/icons/rounded_logo128.png"
   },
   "permissions": ["alarms", "storage", "notifications", "offscreen"],
   "background": {
