@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   attachEventListeners();
   initializeCircularProgress(progressCircle);
 
-  exerciseProgress.textContent = "Awaiting input...";
+  exerciseProgress.textContent = ".....";
   
   chrome.storage.local.get('isMuted', (data) => {
     muteSwitch.checked = data.isMuted || false;
