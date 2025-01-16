@@ -1,6 +1,9 @@
 import { startExercise, stopExercise, getExerciseState } from './exerciseManager.js';
 import { scheduleReminderAtTime } from './notifications.js';
 
+// Cached mute state
+let isMuted = false;
+
 // Listener for messages from popup.js or exerciseManager.js
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.command) {
@@ -29,10 +32,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break;
 
     case 'getMuteState':
-      chrome.storage.local.get('isMuted', (data) => {
-        sendResponse({ isMuted: data.isMuted || false });
-      });
-      return true;
+      sendResponse({ isMuted });
+      break;
 
     case 'updateProgress':
       chrome.runtime.sendMessage(message); // Forward `updateProgress` to popup.js
@@ -52,12 +53,14 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 /**
- * Toggles the mute state in chrome.storage.
- * @param {boolean} isMuted - The new mute state.
+ * Toggles the mute state in chrome.storage and updates cached value.
+ * @param {boolean} newMuteState - The new mute state.
  */
-function toggleMuteState(isMuted) {
-  chrome.storage.local.set({ isMuted }, () => {
-    chrome.runtime.sendMessage({ command: 'updateMuteState', isMuted });
+function toggleMuteState(newMuteState) {
+  isMuted = newMuteState; // Update cached state
+  chrome.storage.local.set({ isMuted: newMuteState }, () => {
+    // Notify offscreen.js about the mute state change
+    chrome.runtime.sendMessage({ command: 'updateMuteState', isMuted: newMuteState });
   });
 }
 
