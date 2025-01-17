@@ -14,135 +14,166 @@
      <header class="app-header">
       <img src="../assets/icons/logo48.png" alt="Kegel Keeper Logo" class="logo">
 
-      <span class="app-name">Kegel Keeper</span>
+      <span class="app-name">KegelKeeper</span>
     </header>
 
    <!-- Exercise Controls Section -->
-<div id="controls" class="section">
-  <p id="status" aria-live="polite">Ready to begin</p>
-  <div class="button-group">
-    <button id="startButton" class="btn-primary">Start</button>
-    <button id="stopButton" class="btn-secondary" disabled>Stop</button>
-  </div>
-  
-</div>
-
-
+   <div id="controls" class="section">
+     <p id="status" aria-live="polite">Ready to begin!</p>
+     <div class="button-group">
+       <button id="startButton" class="btn-primary">Start</button>
+       <button id="stopButton" class="btn-secondary" disabled>Stop</button>
+     </div>
+   </div>
 
    <!-- Circular Progress Bar -->
-<div id="progressCircle" class="section">
-  <svg class="progress-ring" width="200" height="200">
-    <circle class="progress-ring__background" cx="100" cy="100" r="90"></circle>
-<circle class="progress-ring__circle" cx="100" cy="100" r="90"></circle>
+   <div id="progressCircle" class="section">
+     <svg class="progress-ring" width="200" height="200">
+       <circle class="progress-ring__background" cx="100" cy="100" r="90"></circle>
+       <circle class="progress-ring__circle" cx="100" cy="100" r="90"></circle>
 
-    <text x="50%" y="50%" class="progress-ring__text" id="progressText" dominant-baseline="middle" text-anchor="middle">
-      Ready
-    </text>
-  </svg>
-  <div id="exerciseProgress" aria-live="polite">Cycle 0 of 0</div>
+       <text x="50%" y="50%" class="progress-ring__text" id="progressText" dominant-baseline="middle" text-anchor="middle">
+         Ready
+       </text>
+     </svg>
+     <div id="exerciseProgress" aria-live="polite">Cycle 0 of 0</div>
+   </div>
+
+
+
+
+  
+
+
+   <!-- Exercise Settings Section -->
+   <section id="settings" class="section">
+     <h2>Exercise Settings</h2>
+
+     <label for="holdTime">Hold Time (seconds):</label>
+     <select id="holdTime">
+       <!-- Options from 3 to 20 seconds -->
+       <option value="3">3 seconds</option>
+       <option value="4">4 seconds</option>
+       <option value="5">5 seconds</option>
+       <option value="6">6 seconds</option>
+       <option value="7">7 seconds</option>
+       <option value="8">8 seconds</option>
+       <option value="9">9 seconds</option>
+       <option value="10">10 seconds</option>
+     </select>
+
+     <label for="releaseTime">Release Time (seconds):</label>
+     <select id="releaseTime">
+       <!-- Options from 3 to 20 seconds -->
+       <option value="3">3 seconds</option>
+       <option value="4">4 seconds</option>
+       <option value="5">5 seconds</option>
+       <option value="6">6 seconds</option>
+       <option value="7">7 seconds</option>
+       <option value="8">8 seconds</option>
+       <option value="9">9 seconds</option>
+       <option value="10">10 seconds</option>
+     </select>
+
+     <label for="cycles">Cycles:</label>
+     <select id="cycles">
+       <!-- From 3 cycles to 20 cycles -->
+       <option value="3">3 cycles</option>
+       <option value="4">4 cycles</option>
+       <option value="5">5 cycles</option>
+       <option value="6">6 cycles</option>
+       <option value="7">7 cycles</option>
+       <option value="8">8 cycles</option>
+       <option value="9">9 cycles</option>
+       <option value="10">10 cycles</option>
+     </select>
+
+     <button id="saveSettings" class="btn-primary">Save Settings</button>
+
+     <!-- Mute Toggle Button -->
+     <div id="muteToggle">
+       <label for="muteSwitch">Mute Sound:</label>
+       <label class="switch">
+         <input type="checkbox" id="muteSwitch">
+         <span class="slider"></span>
+       </label>
+     </div>
+
+     <!-- Theme Toggle Button -->
+     <div id="themeToggle">
+       <label for="themeSwitch">Dark Mode:</label>
+       <label class="switch">
+         <input type="checkbox" id="themeSwitch">
+         <span class="slider"></span>
+       </label>
+     </div>
+   </section>
+
+   <!-- Reminder Settings Section -->
+   <section id="reminderSettings" class="section">
+     <h2>Reminder Settings</h2>
+
+     <label for="reminderTime">Set Reminder Time:</label>
+     <input type="time" id="reminderTime">
+
+     <!-- Reminder Repeat Interval Section (hidden by default) -->
+     <div id="reminderRepeatIntervalSection" class="hidden">
+       <label for="reminderRepeatInterval">Repeat Reminder Every (minutes):</label>
+       <input type="number" id="reminderRepeatInterval" min="1" placeholder="Enter minutes">
+     </div>
+
+     <button id="saveReminderTime" class="btn-primary">Save Reminder Time</button>
+
+     <!-- Reminder Toggle Button -->
+     <div id="reminderToggle">
+       <label for="enableReminders">Enable Reminders:</label>
+       <label class="switch">
+         <input type="checkbox" id="enableReminders">
+         <span class="slider"></span>
+       </label>
+     </div>
+
+
+
+     
+   </section>
+
+   <!-- Progress Stats Section -->
+<div id="progress-stats" class="section">
+  <h3>Your Progress</h3>
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-label">Total Sessions:</span>
+      <span class="stat-value" id="total-sessions">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Total Holding Time:</span>
+      <span class="stat-value" id="total-holding-time">0 mins</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Current Streak:</span>
+      <span class="stat-value" id="current-streak">0 days</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Longest Streak:</span>
+      <span class="stat-value" id="longest-streak">0 days</span>
+    </div>
+  </div>
+  <!-- History Button -->
+  <!-- History Button -->
+<button id="toggle-history" class="btn-primary hidden">View History</button>
+
 </div>
 
-
-
-
-    <!-- Exercise Settings Section -->
-    <section id="settings" class="section">
-      <h2>Exercise Settings</h2>
-
-      <label for="holdTime">Hold Time (seconds):</label>
-      <select id="holdTime">
-        <!-- Options from 3 to 20 seconds -->
-        <option value="3">3 seconds</option>
-        <option value="4">4 seconds</option>
-        <option value="5">5 seconds</option>
-        <option value="6">6 seconds</option>
-        <option value="7">7 seconds</option>
-        <option value="8">8 seconds</option>
-        <option value="9">9 seconds</option>
-        <option value="10">10 seconds</option>
-        
-      </select>
-      
-      <label for="releaseTime">Release Time (seconds):</label>
-      <select id="releaseTime">
-        <!-- Options from 3 to 20 seconds -->
-        <option value="3">3 seconds</option>
-        <option value="4">4 seconds</option>
-        <option value="5">5 seconds</option>
-        <option value="6">6 seconds</option>
-        <option value="7">7 seconds</option>
-        <option value="8">8 seconds</option>
-        <option value="9">9 seconds</option>
-        <option value="10">10 seconds</option>
-        
-      </select>
-
-      <label for="cycles">Cycles:</label>
-      <select id="cycles">
-        <!-- From 3 cycles to 20 cycles -->
-        <option value="3">3 cycles</option>
-        <option value="4">4 cycles</option>
-        <option value="5">5 cycles</option>
-        <option value="6">6 cycles</option>
-        <option value="7">7 cycles</option>
-        <option value="8">8 cycles</option>
-        <option value="9">9 cycles</option>
-        <option value="10">10 cycles</option>
-       
-      </select>
-
-      <button id="saveSettings" class="btn-primary">Save Settings</button>
-      
-
-      <!-- Mute Toggle Button -->
-<div id="muteToggle">
-  <label for="muteSwitch">Mute Sound:</label>
-  <label class="switch">
-    <input type="checkbox" id="muteSwitch">
-    <span class="slider"></span>
-  </label>
+<!-- Optional: Progress History Section (Hidden by Default) -->
+<div id="progress-history" class="section hidden">
+  <h3>Session History</h3>
+  <ul id="session-history" class="history-list">
+    <!-- Session history items will be dynamically added here -->
+  </ul>
 </div>
-
-<!-- Theme Toggle Button -->
-<div id="themeToggle">
-  <label for="themeSwitch">Dark Mode:</label>
-  <label class="switch">
-    <input type="checkbox" id="themeSwitch">
-    <span class="slider"></span>
-  </label>
-</div>
-
-    </section>
-
-    <!-- Reminder Settings Section -->
-    <section id="reminderSettings" class="section">
-      <h2>Reminder Settings</h2>
-      
-      <label for="reminderTime">Set Reminder Time:</label>
-      <input type="time" id="reminderTime">
-      
-      <!-- Reminder Repeat Interval Section (hidden by default) -->
-<div id="reminderRepeatIntervalSection" class="hidden">
-  <label for="reminderRepeatInterval">Repeat Reminder Every (minutes):</label>
-  <input type="number" id="reminderRepeatInterval" min="1" placeholder="Enter minutes">
-</div>
-
-      
-      <button id="saveReminderTime" class="btn-primary">Save Reminder Time</button>
-
-      <!-- Reminder Toggle Button -->
-      <div id="reminderToggle">
-        <label for="enableReminders">Enable Reminders:</label>
-        <label class="switch">
-          <input type="checkbox" id="enableReminders">
-          <span class="slider"></span>
-        </label>
-      </div>
-    </section>
   </div>
 
   <script type="module" src="../js/popup/popup.js"></script>
-
 </body>
 </html>
-

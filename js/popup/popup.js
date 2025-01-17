@@ -1,6 +1,6 @@
 import { saveSettings, loadSettings } from '../exerciseSettings.js';
 import { loadReminderSettings, saveReminderSettings, toggleReminders } from '../reminderSettings.js';
-import { updateStatus, updateProgressDisplay, toggleStartStopButtons } from './popup-ui.js';
+import { updateStatus, updateProgressDisplay, toggleStartStopButtons, displayProgressData } from './popup-ui.js';
 import { attachEventListeners } from './popup-eventListeners.js';
 import {
   initializeCircularProgress,
@@ -30,6 +30,7 @@ progressCircle.style.strokeDasharray = `${CIRCUMFERENCE} ${CIRCUMFERENCE}`;
 progressCircle.style.strokeDashoffset = CIRCUMFERENCE;
 
 // Initialize settings and event listeners
+// Initialize settings and event listeners
 document.addEventListener('DOMContentLoaded', () => {
   initializeSettings();
   loadReminderSettings(reminderTimeInput, reminderRepeatIntervalInput, enableRemindersCheckbox);
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeCircularProgress(progressCircle);
 
   exerciseProgress.textContent = ".....";
-  
+
   chrome.storage.local.get('isMuted', (data) => {
     muteSwitch.checked = data.isMuted || false;
   });
@@ -55,7 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleStartStopButtons(false);
     }
   });
+
+  // Pass exercise settings to displayProgressData
+  loadSettings((settings) => {
+    const { holdTime, releaseTime, cycles } = settings;
+    displayProgressData(holdTime, releaseTime, cycles);
+  });
 });
+
+
 
 // Load initial exercise settings
 function initializeSettings() {
@@ -113,6 +122,14 @@ function handleExerciseComplete(totalCycles) {
   toggleStartStopButtons(false);
 }
 
+// Add refresh progress function to update stats
+function refreshProgress() {
+  loadSettings((settings) => {
+    const { holdTime, releaseTime, cycles } = settings;
+    displayProgressData(holdTime, releaseTime, cycles);
+  });
+}
+
 // Save exercise settings
 export function saveExerciseSettings() {
   saveSettings(getExerciseSettings());
@@ -120,6 +137,7 @@ export function saveExerciseSettings() {
 }
 
 // Handle messages from background.js
+
 chrome.runtime.onMessage.addListener((message) => {
   if (message.command === 'updatePhase') {
     updateStatus(`Exercise phase: ${message.phase}`);
@@ -131,10 +149,12 @@ chrome.runtime.onMessage.addListener((message) => {
   } else if (message.command === 'exerciseStopped') {
     if (message.wasCompletedNaturally) {
       handleExerciseComplete(cyclesInput.value);
+      refreshProgress(); // Update stats after completing the exercise
     } else {
       updateStatus('Exercise stopped');
       exerciseProgress.textContent = `Cycle 0 of ${cyclesInput.value}`;
       resetCircularProgress(progressCircle);
+      refreshProgress(); // Update stats after stopping the exercise
     }
   } else if (message.command === 'updateProgress') {
     updateProgressDisplay(message.currentCycle, message.totalCycles);

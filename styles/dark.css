@@ -223,3 +223,56 @@ body.dark input:checked + .slider:before {
 body.dark .hidden {
   display: none;
 }
+
+
+/* Progress Stats Section in Dark Mode */
+body.dark #progress-stats {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #2a2a2a; /* Matches other sections */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+body.dark #progress-stats h3 {
+  font-size: 1.5rem;
+  color: #81c784; /* Soft green for section title */
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Stats Rows */
+body.dark .stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between stat rows */
+}
+
+body.dark .stat {
+  display: flex;
+  justify-content: space-between; /* Align label and value horizontally */
+  align-items: center;
+  font-size: 1rem;
+  padding: 5px 0; /* Vertical spacing without box or border */
+}
+
+/* Remove background and border */
+body.dark .stat-label {
+  font-weight: 600;
+  color: #bdbdbd; /* Light gray for labels */
+}
+
+body.dark .stat-value {
+  font-weight: bold;
+  color: #e0e0e0; /* Bright text for values */
+  text-align: right;
+}
+
+/* Optional: Add subtle dividers between rows */
+body.dark .stat:not(:last-child) {
+  border-bottom: 1px solid #424242; /* Subtle dark gray divider */
+}
+
+
+

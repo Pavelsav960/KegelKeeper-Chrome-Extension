@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "KegelKeeper: Smart Reminder",
+  "name": "KegelKeeper: Build Stronger Pelvic Muscles",
   "version": "2.0.0",
-  "description": "Reminds users to do Kegel exercises with customizable timers.",
+  "description": "Personalized Kegel exercises and reminders for better pelvic health.",
   "action": {
     "default_popup": "views/popup.html",
     "default_icon": "assets/icons/rounded_logo128.png"

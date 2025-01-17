@@ -1,4 +1,9 @@
-import { scheduleReminderAtTime } from './notifications.js';
+import { updateProgress } from './progressTracker.js';
+
+// Constants
+const PHASE_HOLD = 'hold';
+const PHASE_RELEASE = 'release';
+const COMMAND_UPDATE_PHASE = 'updatePhase';
 
 // Default exercise configuration and initial state
 const exerciseConfig = { holdTime: 5, releaseTime: 5, cycles: 10 };
@@ -10,7 +15,8 @@ const exerciseState = { timer: null, currentCycle: 0, isActive: false };
  */
 export async function startExercise(settings = exerciseConfig) {
   await ensureOffscreenDocument();
-  Object.assign(exerciseState, { currentCycle: 0, isActive: true });
+  resetExerciseState();
+  Object.assign(exerciseState, { isActive: true });
   chrome.storage.local.set({ exerciseState: { isActive: true, settings } });
   executeNextPhase(settings);
 }
@@ -25,12 +31,8 @@ export function getExerciseState() {
  */
 async function ensureOffscreenDocument() {
   try {
-    console.log('Checking if offscreen document exists...');
     const hasDocument = await chrome.offscreen.hasDocument();
-    console.log('Offscreen document exists:', hasDocument);
-
     if (!hasDocument) {
-      console.log('Creating offscreen document at ../views/offscreen.html');
       await chrome.offscreen.createDocument({
         url: '../views/offscreen.html',
         reasons: ['AUDIO_PLAYBACK'],
@@ -39,9 +41,9 @@ async function ensureOffscreenDocument() {
     }
   } catch (error) {
     console.error("Error creating offscreen document:", error);
+    chrome.runtime.sendMessage({ command: 'showError', error: 'Audio functionality unavailable.' });
   }
 }
-
 
 /**
  * Handles each phase of the exercise (hold or release).
@@ -53,47 +55,62 @@ function executeNextPhase(settings) {
   if (currentCycle < settings.cycles * 2 && isActive) {
     const isHoldPhase = currentCycle % 2 === 0;
 
-    applyPhaseFeedback(isHoldPhase);
-
-    // Calculate the completed cycle for display purposes
-    const completedCycle = Math.floor(currentCycle / 2) + 1;
-
-    if (isHoldPhase) {
-      chrome.runtime.sendMessage({ command: 'updatePhase', phase: 'hold' });
-      startCircularProgress(settings.holdTime);
-
-      // Send progress update during the hold phase
-      chrome.runtime.sendMessage({
-        command: 'updateProgress',
-        currentCycle: completedCycle,
-        totalCycles: settings.cycles,
-      });
-    } else {
-      chrome.runtime.sendMessage({ command: 'updatePhase', phase: 'release' });
-      resetCircularProgress();
-    }
-
-    // Increment the currentCycle after each phase
-    exerciseState.currentCycle++;
-    chrome.storage.local.set({ currentCycle: exerciseState.currentCycle });
-
-    // Schedule the next phase
-    schedulePhaseTimeout(isHoldPhase, settings);
+    handlePhaseUpdate(isHoldPhase, settings);
+    scheduleNextPhase(isHoldPhase, settings);
   } else {
     stopExercise(true);
   }
 }
 
+/**
+ * Handles phase updates: feedback, progress updates, and UI changes.
+ */
+function handlePhaseUpdate(isHoldPhase, settings) {
+  applyPhaseFeedback(isHoldPhase);
 
+  if (isHoldPhase) {
+    sendHoldPhaseUpdates(settings);
+  } else {
+    sendReleasePhaseUpdates();
+  }
+
+  // Increment cycle
+  exerciseState.currentCycle++;
+  chrome.storage.local.set({ currentCycle: exerciseState.currentCycle });
+}
+
+function sendHoldPhaseUpdates(settings) {
+  const completedCycle = Math.floor(exerciseState.currentCycle / 2) + 1;
+
+  chrome.runtime.sendMessage({
+    command: 'updateProgress',
+    currentCycle: completedCycle,
+    totalCycles: settings.cycles,
+  });
+
+  chrome.runtime.sendMessage({ command: COMMAND_UPDATE_PHASE, phase: PHASE_HOLD });
+  startCircularProgress(settings.holdTime);
+}
+
+
+function sendReleasePhaseUpdates() {
+  chrome.runtime.sendMessage({ command: COMMAND_UPDATE_PHASE, phase: PHASE_RELEASE });
+  resetCircularProgress();
+}
+
+function scheduleNextPhase(isHoldPhase, settings) {
+  const duration = isHoldPhase ? settings.holdTime : settings.releaseTime;
+  schedulePhaseTimeout(duration, settings);
+}
 
 /**
  * Sends phase-related feedback (visual/audio).
  */
 async function applyPhaseFeedback(isHoldPhase) {
-  const phase = isHoldPhase ? 'hold' : 'release';
+  const phase = isHoldPhase ? PHASE_HOLD : PHASE_RELEASE;
   chrome.storage.local.set({ phase });
-  
-  chrome.runtime.sendMessage({ command: 'updatePhase', phase }, (response) => {
+
+  chrome.runtime.sendMessage({ command: COMMAND_UPDATE_PHASE, phase }, (response) => {
     if (chrome.runtime.lastError) {
       console.warn('Popup is not open; skipping phase update.');
     } else {
@@ -113,8 +130,6 @@ async function applyPhaseFeedback(isHoldPhase) {
   }
 }
 
-
-
 /** Checks if sound is muted. */
 async function isMuted() {
   return new Promise((resolve) => {
@@ -125,8 +140,7 @@ async function isMuted() {
 }
 
 /** Schedules the timeout for the next phase. */
-function schedulePhaseTimeout(isHoldPhase, settings) {
-  const duration = isHoldPhase ? settings.holdTime : settings.releaseTime;
+function schedulePhaseTimeout(duration, settings) {
   clearTimeout(exerciseState.timer);
   exerciseState.timer = setTimeout(() => executeNextPhase(settings), duration * 1000);
 }
@@ -137,7 +151,17 @@ export function stopExercise(wasCompletedNaturally = false) {
   chrome.alarms.clearAll();
   exerciseState.isActive = false;
   chrome.storage.local.set({ exerciseState: { isActive: false } });
+
+  if (wasCompletedNaturally) {
+    updateProgress(); // Log the completed session without sets
+  }
+
   chrome.runtime.sendMessage({ command: 'exerciseStopped', wasCompletedNaturally });
+}
+
+/** Resets the exercise state to default. */
+function resetExerciseState() {
+  Object.assign(exerciseState, { timer: null, currentCycle: 0, isActive: false });
 }
 
 /** Starts the circular progress bar animation during the "hold" phase. */

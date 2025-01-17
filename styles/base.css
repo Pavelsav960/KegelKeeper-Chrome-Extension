@@ -260,3 +260,54 @@ input:checked + .slider:before {
 .hidden {
   display: none;
 }
+
+
+/* Progress Stats Section */
+#progress-stats {
+  margin-bottom: 20px; /* Matches the spacing for sections */
+  padding: 15px; /* Consistent padding */
+  background-color: #f1f8e9; /* Same as other sections */
+  border-radius: 10px; /* Rounded corners for uniformity */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#progress-stats h3 {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Stats Rows */
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between rows */
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between; /* Align label and value horizontally */
+  align-items: center;
+  font-size: 1rem;
+  padding: 5px 0; /* Add vertical space without a box */
+}
+
+/* Remove background and border */
+.stat-label {
+  font-weight: 600;
+  color: #555; /* Keep text color for light mode */
+}
+
+.stat-value {
+  font-weight: bold;
+  color: #333; /* Slightly darker for contrast */
+  text-align: right;
+}
+
+/* Optional: Add subtle dividers between rows */
+.stat:not(:last-child) {
+  border-bottom: 1px solid #ddd; /* Light gray divider */
+}
+
