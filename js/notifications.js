@@ -1,6 +1,19 @@
+// Clear all unnecessary alarms before scheduling new ones
+function clearAllReminders() {
+  chrome.alarms.clearAll((wasCleared) => {
+    if (wasCleared) {
+      console.log('All existing reminders cleared.');
+    } else {
+      console.log('No alarms to clear.');
+    }
+  });
+}
+
 // Schedule an alarm for a specific time of day and repeat interval
 function scheduleReminderAtTime(reminderTime, repeatInterval = 0) {
   try {
+    clearAllReminders(); // Ensure no duplicate alarms are active
+
     const [hours, minutes] = reminderTime.split(':').map(Number);
     const now = new Date();
     const reminderDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
@@ -11,24 +24,17 @@ function scheduleReminderAtTime(reminderTime, repeatInterval = 0) {
 
     const timeUntilReminder = reminderDate.getTime() - now.getTime();
 
-    chrome.alarms.getAll((alarms) => {
-      const alarmNames = alarms.map(alarm => alarm.name);
+    chrome.alarms.create('dailyKegelReminder', { when: Date.now() + timeUntilReminder });
+    console.log("Scheduled dailyKegelReminder for", reminderDate);
 
-      if (!alarmNames.includes('dailyKegelReminder')) {
-        chrome.alarms.create('dailyKegelReminder', { when: Date.now() + timeUntilReminder });
-        console.log("Scheduled dailyKegelReminder for", reminderDate);
-      }
-
-      if (repeatInterval > 0 && !alarmNames.includes('kegelReminderRepeat')) {
-        chrome.alarms.create('kegelReminderRepeat', { periodInMinutes: repeatInterval });
-        console.log(`Scheduled kegelReminderRepeat every ${repeatInterval} minutes.`);
-      }
-    });
+    if (repeatInterval > 0) {
+      chrome.alarms.create('kegelReminderRepeat', { periodInMinutes: repeatInterval });
+      console.log(`Scheduled kegelReminderRepeat every ${repeatInterval} minutes.`);
+    }
   } catch (error) {
     console.error("Error in scheduleReminderAtTime:", error);
   }
 }
-
 
 // Listen for alarms and trigger notifications
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -46,7 +52,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
           }
         });
 
-        // Reschedule the daily reminder for the next day if needed
+        // Reschedule the daily reminder for the next day
         if (alarm.name === 'dailyKegelReminder') {
           chrome.storage.sync.get('reminderTime', (result) => {
             if (result.reminderTime) {
@@ -61,5 +67,15 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
+// Utility to cancel a specific reminder
+function cancelReminder(alarmName) {
+  chrome.alarms.clear(alarmName, (wasCleared) => {
+    if (wasCleared) {
+      console.log(`Reminder "${alarmName}" canceled successfully.`);
+    } else {
+      console.log(`No reminder with the name "${alarmName}" found.`);
+    }
+  });
+}
 
-export { scheduleReminderAtTime };
+export { scheduleReminderAtTime, cancelReminder };

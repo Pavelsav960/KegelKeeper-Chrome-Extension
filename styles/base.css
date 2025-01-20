@@ -98,11 +98,14 @@ button {
 }
 
 button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  background-color: #bdbdbd;
-  color: #ffffff;
+  opacity: 0.5; /* Lower opacity for distinction */
+  cursor: not-allowed; /* Visual indicator that the button is not clickable */
+  background-color: #d7d7d7; /* Light gray for disabled state */
+  color: #a1a1a1; /* Muted text color */
+  box-shadow: none; /* Remove shadow for a flat appearance */
+  border: 1px solid #b0b0b0; /* Optional: subtle border for better visibility */
 }
+
 
 /* Button Click Effect */
 button:active {
@@ -146,7 +149,7 @@ button:active {
 .progress-ring {
   display: block;
   margin: 20px auto;
-  transform: rotate(-90deg);
+  /* transform: rotate(-90deg); */
 }
 
 .progress-ring__background {
@@ -165,11 +168,18 @@ button:active {
 }
 
 .progress-ring__text {
-  font-size: 2rem;
-  fill: #000;
-  font-weight: bold;
-  transform: rotate(90deg);
+  font-size: 2.5rem; /* Larger size for better visibility */
+  font-family: 'Arial', sans-serif; /* Clean and web-safe font */
+  fill: #000000; /* Default text color for light mode */
+  font-weight: bold; /* Makes the text stand out */
+  text-anchor: middle; /* Centers the text horizontally */
+  dominant-baseline: middle; /* Centers the text vertically */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  transition: fill 0.3s ease, font-size 0.3s ease; /* Smooth transitions for mode changes */
 }
+
+
+
 
 /* Labels */
 label {

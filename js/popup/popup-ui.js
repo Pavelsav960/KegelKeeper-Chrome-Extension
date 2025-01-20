@@ -31,6 +31,8 @@ export function toggleStartStopButtons(isRunning) {
   stopButton.disabled = !isRunning;
 }
 
+
+
 /** Displays progress tracking data in the popup.
  * Fetches progress data from storage and updates the corresponding elements.
  */

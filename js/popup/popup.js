@@ -1,6 +1,7 @@
 import { saveSettings, loadSettings } from '../exerciseSettings.js';
 import { loadReminderSettings, saveReminderSettings, toggleReminders } from '../reminderSettings.js';
 import { updateStatus, updateProgressDisplay, toggleStartStopButtons, displayProgressData } from './popup-ui.js';
+// import { startCountdown } from './popup-ui.js'; // Import the function
 import { attachEventListeners } from './popup-eventListeners.js';
 import {
   initializeCircularProgress,
@@ -142,21 +143,25 @@ chrome.runtime.onMessage.addListener((message) => {
   if (message.command === 'updatePhase') {
     updateStatus(`Exercise phase: ${message.phase}`);
     if (message.phase === 'hold') {
-      startCircularProgress(parseInt(holdTimeInput.value) * 1000, progressCircle);
+      // Start progress bar and countdown for hold phase
+      startCircularProgress(parseInt(holdTimeInput.value) * 1000, progressCircle, 'hold');
     } else if (message.phase === 'release') {
-      resetCircularProgress(progressCircle);
+      // Start countdown for release phase (no progress bar animation)
+      startCircularProgress(parseInt(releaseTimeInput.value) * 1000, progressCircle, 'release');
     }
   } else if (message.command === 'exerciseStopped') {
     if (message.wasCompletedNaturally) {
       handleExerciseComplete(cyclesInput.value);
-      refreshProgress(); // Update stats after completing the exercise
+      refreshProgress();
     } else {
       updateStatus('Exercise stopped');
       exerciseProgress.textContent = `Cycle 0 of ${cyclesInput.value}`;
       resetCircularProgress(progressCircle);
-      refreshProgress(); // Update stats after stopping the exercise
+      refreshProgress();
     }
   } else if (message.command === 'updateProgress') {
     updateProgressDisplay(message.currentCycle, message.totalCycles);
   }
 });
+
+

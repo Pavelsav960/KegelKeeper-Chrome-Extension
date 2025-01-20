@@ -129,7 +129,7 @@ body.dark #exerciseProgress {
 body.dark .progress-ring {
   display: block;
   margin: 20px auto;
-  transform: rotate(-90deg);
+  /* transform: rotate(-90deg); */
 }
 
 body.dark .progress-ring__background {
@@ -148,11 +148,10 @@ body.dark .progress-ring__circle {
 }
 
 body.dark .progress-ring__text {
-  font-size: 2rem;
-  fill: #ffffff; /* White text */
-  font-weight: bold;
-  transform: rotate(90deg);
+  fill: #ffffff; /* White text for better contrast in dark mode */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for dark backgrounds */
 }
+
 
 body.dark label {
   font-size: 1rem;

@@ -50,36 +50,48 @@ async function ensureOffscreenDocument() {
  * Sends updates to the popup and manages the circular progress bar.
  */
 function executeNextPhase(settings) {
+  console.log('Executing next phase...');
   const { currentCycle, isActive } = exerciseState;
+  console.log('Current cycle:', currentCycle);
+  console.log('Is exercise active:', isActive);
 
   if (currentCycle < settings.cycles * 2 && isActive) {
     const isHoldPhase = currentCycle % 2 === 0;
+    console.log('Is hold phase:', isHoldPhase);
 
     handlePhaseUpdate(isHoldPhase, settings);
     scheduleNextPhase(isHoldPhase, settings);
   } else {
+    console.log('Exercise complete. Stopping...');
     stopExercise(true);
   }
 }
+
 
 /**
  * Handles phase updates: feedback, progress updates, and UI changes.
  */
 function handlePhaseUpdate(isHoldPhase, settings) {
+  console.log('Handling phase update...');
+  console.log('Is hold phase:', isHoldPhase);
+
   applyPhaseFeedback(isHoldPhase);
 
   if (isHoldPhase) {
     sendHoldPhaseUpdates(settings);
   } else {
-    sendReleasePhaseUpdates();
+    console.log('Preparing to start release phase...');
+    sendReleasePhaseUpdates(settings);
   }
 
   // Increment cycle
   exerciseState.currentCycle++;
+  console.log('Cycle incremented. Current cycle:', exerciseState.currentCycle);
   chrome.storage.local.set({ currentCycle: exerciseState.currentCycle });
 }
 
-function sendHoldPhaseUpdates(settings) {
+
+function sendHoldPhaseUpdates(settings, progressCircle) {
   const completedCycle = Math.floor(exerciseState.currentCycle / 2) + 1;
 
   chrome.runtime.sendMessage({
@@ -89,14 +101,19 @@ function sendHoldPhaseUpdates(settings) {
   });
 
   chrome.runtime.sendMessage({ command: COMMAND_UPDATE_PHASE, phase: PHASE_HOLD });
-  startCircularProgress(settings.holdTime);
+
+  // Pass progressCircle to startCircularProgress
+  startCircularProgress(settings.holdTime * 1000, progressCircle, 'hold');
 }
 
-
-function sendReleasePhaseUpdates() {
+function sendReleasePhaseUpdates(settings, progressCircle) {
   chrome.runtime.sendMessage({ command: COMMAND_UPDATE_PHASE, phase: PHASE_RELEASE });
-  resetCircularProgress();
+
+  // Pass progressCircle to startCircularProgress
+  startCircularProgress(settings.releaseTime * 1000, progressCircle, 'release');
 }
+
+
 
 function scheduleNextPhase(isHoldPhase, settings) {
   const duration = isHoldPhase ? settings.holdTime : settings.releaseTime;
@@ -164,11 +181,12 @@ function resetExerciseState() {
   Object.assign(exerciseState, { timer: null, currentCycle: 0, isActive: false });
 }
 
-/** Starts the circular progress bar animation during the "hold" phase. */
-function startCircularProgress(holdTime) {
+/** Starts the circular progress bar animation during a phase. */
+function startCircularProgress(duration, phase) {
   chrome.runtime.sendMessage({
     command: 'startCircularProgress',
-    duration: holdTime * 1000,
+    duration: duration * 1000,
+    phase,
   });
 }
 
