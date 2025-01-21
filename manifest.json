@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "KegelKeeper: Build Stronger Pelvic Muscles",
+  "name": "KegelKeeper: Easy Kegel Exercises and Reminders",
   "version": "2.0.1",
-  "description": "Personalized Kegel exercises and reminders for better pelvic health.",
+  "description": "Stay on top of your pelvic health with simple Kegel routines, reminders, and progress tracking.",
   "action": {
     "default_popup": "views/popup.html",
     "default_icon": "assets/icons/rounded_logo128.png"
