@@ -8,6 +8,8 @@ import {
   startCircularProgress,
   resetCircularProgress,
 } from './popup-progress.js';
+import { populateExercisePlansDropdown, getPlanSettings } from '../exercisePlans.js';
+
 
 // DOM element references
 const holdTimeInput = document.getElementById('holdTime');
@@ -20,8 +22,8 @@ const exerciseProgress = document.getElementById('exerciseProgress');
 const progressCircle = document.querySelector('.progress-ring__circle'); // Circular progress bar
 const muteSwitch = document.getElementById('muteSwitch');
 const themeSwitch = document.getElementById('themeSwitch'); // Theme toggle element
-const saveReminderButton = document.getElementById('saveReminderTime');
-const saveSettingsButton = document.getElementById('saveSettings');
+const exercisePlanDropdown = document.getElementById('exercisePlan');
+
 
 // Constants for the circular progress bar
 const RADIUS = 90; // Updated radius
@@ -37,6 +39,33 @@ document.addEventListener('DOMContentLoaded', () => {
   loadReminderSettings(reminderTimeInput, reminderRepeatIntervalInput, enableRemindersCheckbox);
   attachEventListeners();
   initializeCircularProgress(progressCircle);
+
+  // Populate the exercise plans dropdown
+  populateExercisePlansDropdown(exercisePlanDropdown);
+
+  // Restore the selected plan and apply its settings
+  chrome.storage.local.get('selectedPlan', (data) => {
+    const savedPlan = data.selectedPlan || 'beginner'; // Default to beginner
+    exercisePlanDropdown.value = savedPlan;
+
+    const selectedPlanSettings = getPlanSettings(savedPlan);
+    if (selectedPlanSettings) {
+      holdTimeInput.value = selectedPlanSettings.holdTime;
+      releaseTimeInput.value = selectedPlanSettings.releaseTime;
+      cyclesInput.value = selectedPlanSettings.cycles;
+    }
+  });
+
+  exercisePlanDropdown.addEventListener('change', () => {
+    const selectedPlanSettings = getPlanSettings(exercisePlanDropdown.value);
+    if (selectedPlanSettings) {
+      holdTimeInput.value = selectedPlanSettings.holdTime;
+      releaseTimeInput.value = selectedPlanSettings.releaseTime;
+      cyclesInput.value = selectedPlanSettings.cycles;
+
+      chrome.storage.local.set({ selectedPlan: exercisePlanDropdown.value });
+    }
+  });
 
   exerciseProgress.textContent = ".....";
 
@@ -64,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     displayProgressData(holdTime, releaseTime, cycles);
   });
 });
+
 
 
 

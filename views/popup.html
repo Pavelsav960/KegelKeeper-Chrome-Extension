@@ -30,18 +30,28 @@
         <circle class="progress-ring__circle" cx="100" cy="100" r="90" transform="rotate(-90, 100, 100)"></circle>
 
         <text
-  x="50%"
-  y="50%"
-  class="progress-ring__text"
-  id="progressText"
-  dominant-baseline="central"
-  text-anchor="middle"
-></text>
-
-      
+          x="50%"
+          y="50%"
+          class="progress-ring__text"
+          id="progressText"
+          dominant-baseline="central"
+          text-anchor="middle"
+        ></text>
       </svg>
       <div id="exerciseProgress" aria-live="polite">Cycle 0 of 0</div>
     </div>
+
+    <!-- Exercise Plans Section -->
+    <section id="exercisePlans" class="section">
+      <h2>Exercise Plans</h2>
+      <select id="exercisePlan">
+        <option value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+        
+      </select>
+      
+    </section>
 
     <!-- Exercise Settings Section -->
     <section id="settings" class="section">
